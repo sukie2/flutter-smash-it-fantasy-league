@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'SmashItApp.dart';
+import 'smash_it_app.dart';
 
 void main() {
   runApp(SmashItApp());

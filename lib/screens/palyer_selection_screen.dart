@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smash_it/widgets/game_info_widget.dart';
 import 'package:smash_it/widgets/player_row.dart';
 
 class PlayerSelectionScreen extends StatefulWidget {
@@ -14,17 +15,17 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          title: Text('Pick your XI'),
-          expandedHeight: 30,
-          collapsedHeight: 150,
-        ),
-        SliverAppBar(
-          backgroundColor: Colors.blue,
-          title: Text('SL vs IND'),
+          pinned: true,
           floating: true,
+          expandedHeight: 200,
+          backgroundColor: Colors.blueGrey,
+          flexibleSpace: FlexibleSpaceBar(
+            background: GameInfoWidget(),
+            title: Text('SL vs IND'),
+          ),
         ),
         SliverFixedExtentList(
-          itemExtent: 100.0,
+          itemExtent: 120.0,
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return PlayerRow();
