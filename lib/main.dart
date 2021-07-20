@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smash_it/screens/palyer_selection_screen.dart';
+
+import 'SmashItApp.dart';
 
 void main() {
-  runApp(PlayerSelectionScreen());
+  runApp(SmashItApp());
 }

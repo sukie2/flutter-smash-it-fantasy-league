@@ -11,33 +11,28 @@ class PlayerSelectionScreen extends StatefulWidget {
 class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: Colors.amber,
-              title: Text('Pick your XI'),
-              expandedHeight: 30,
-              collapsedHeight: 150,
-            ),
-            SliverAppBar(
-              backgroundColor: Colors.blue,
-              title: Text('SL vs IND'),
-              floating: true,
-            ),
-            SliverFixedExtentList(
-              itemExtent: 100.0,
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return PlayerRow();
-                },
-                childCount: 50,
-              ),
-            ),
-          ],
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          title: Text('Pick your XI'),
+          expandedHeight: 30,
+          collapsedHeight: 150,
         ),
-      ),
+        SliverAppBar(
+          backgroundColor: Colors.blue,
+          title: Text('SL vs IND'),
+          floating: true,
+        ),
+        SliverFixedExtentList(
+          itemExtent: 100.0,
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return PlayerRow();
+            },
+            childCount: 50,
+          ),
+        ),
+      ],
     );
   }
 }
