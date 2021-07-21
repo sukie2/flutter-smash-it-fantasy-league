@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smash_it/constants/text_constants.dart';
+import 'package:smash_it/models/player.dart';
 
 class PlayerRow extends StatelessWidget {
+  final Player player;
+  PlayerRow(this.player);
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -43,12 +47,12 @@ class PlayerRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Dasun Shanaka',
+                    player.name,
                     style: GoogleFonts.oswald(
                         textStyle: TextConstants.kPlayerName),
                   ),
                   Text(
-                    'Batting allrounder',
+                    player.type,
                     style: GoogleFonts.oswald(
                         textStyle: TextConstants.kPlayerCategory),
                   ),
@@ -62,7 +66,7 @@ class PlayerRow extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.only(right: 10),
                       child: Text(
-                        '\$4,000',
+                        '\$${player.cost}',
                         style: TextConstants.kPlayerCost,
                       )),
                   Icon(
