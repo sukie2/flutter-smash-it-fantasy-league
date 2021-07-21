@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smash_it/constants/text_constants.dart';
-import 'package:smash_it/models/player.dart';
+import 'package:smash_it/models/player_row_data.dart';
 
-class PlayerRow extends StatelessWidget {
-  final Player player;
-  PlayerRow(this.player);
+class PlayerRow extends StatefulWidget {
+  final PlayerRowData playerRow;
+  PlayerRow(this.playerRow);
 
+  @override
+  _PlayerRowState createState() => _PlayerRowState();
+}
+
+class _PlayerRowState extends State<PlayerRow> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print('tap');
+        setState(() {
+          widget.playerRow.isSelected = !widget.playerRow.isSelected;
+        });
       },
       child: Padding(
         padding: EdgeInsets.all(10),
@@ -21,7 +28,9 @@ class PlayerRow extends StatelessWidget {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.pink, // .withOpacity(0.5),
+                color: widget.playerRow.isSelected
+                    ? Colors.pink
+                    : Colors.blueGrey, // .withOpacity(0.5),
                 spreadRadius: 4,
                 blurRadius: 7,
                 offset: Offset(0, 3), // changes position of shadow
@@ -32,7 +41,7 @@ class PlayerRow extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
+                padding: EdgeInsets.all(10),
                 child: CircleAvatar(
                   radius: 35,
                   child: Text(
@@ -47,12 +56,12 @@ class PlayerRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    player.name,
+                    widget.playerRow.player.name,
                     style: GoogleFonts.oswald(
                         textStyle: TextConstants.kPlayerName),
                   ),
                   Text(
-                    player.type,
+                    widget.playerRow.player.type,
                     style: GoogleFonts.oswald(
                         textStyle: TextConstants.kPlayerCategory),
                   ),
@@ -66,7 +75,7 @@ class PlayerRow extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.only(right: 10),
                       child: Text(
-                        '\$${player.cost}',
+                        '\$${widget.playerRow.player.cost}',
                         style: TextConstants.kPlayerCost,
                       )),
                   Icon(

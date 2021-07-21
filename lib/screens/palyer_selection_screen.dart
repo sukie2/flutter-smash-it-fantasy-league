@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smash_it/models/player.dart';
+import 'package:smash_it/models/player_row_data.dart';
 import 'package:smash_it/widgets/game_info_widget.dart';
 import 'package:smash_it/widgets/player_row.dart';
 
@@ -11,8 +12,10 @@ class PlayerSelectionScreen extends StatefulWidget {
 }
 
 class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
-  var player1 = Player('Wanindu Hasaranga', 9000, 'Bowling allrounder');
-  var player2 = Player('Dasun Shanaka', 5000, 'Batting allrounder');
+  List<PlayerRowData> playerList = [
+    PlayerRowData(Player('Wanindu Hasaranga', 9000, 'Bowling allrounder')),
+    PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder'))
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +31,12 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
             title: Text('SL vs IND'),
           ),
         ),
-        SliverFixedExtentList(
-          itemExtent: 120.0,
+        SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              return PlayerRow(player1);
+              return PlayerRow(playerList[index]);
             },
-            childCount: 50,
+            childCount: 2, // 1000 list items
           ),
         ),
       ],
