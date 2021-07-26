@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smash_it/helpers/validator.dart';
+import 'package:smash_it/ui/widgets/form_input_field_with_icon.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
-
-  @override
-  _SignUpScreenState createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
+class SignUpScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -16,39 +11,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
       key: _formKey,
       child: Container(
         color: Colors.black,
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                style: TextStyle(backgroundColor: Colors.white),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FormInputFieldWithIcon(
+              iconPrefix: Icons.person,
+              labelText: 'nick name',
+              validator: Validator().name,
+              onChanged: (value) => null,
+              onSaved: (value) {},
+              controller: TextEditingController(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Processing Data')),
+                    );
                   }
-                  return null;
                 },
+                child: const Text('Submit'),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    if (_formKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
-                    }
-                  },
-                  child: const Text('Submit'),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smash_it/models/player.dart';
 import 'package:smash_it/models/player_row_data.dart';
-import 'package:smash_it/widgets/game_info_widget.dart';
-import 'package:smash_it/widgets/player_row.dart';
+import 'package:smash_it/ui/widgets/game_info_widget.dart';
+import 'package:smash_it/ui/widgets/player_row.dart';
 
 class PlayerSelectionScreen extends StatefulWidget {
   const PlayerSelectionScreen({Key? key}) : super(key: key);
