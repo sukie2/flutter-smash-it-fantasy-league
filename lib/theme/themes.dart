@@ -24,7 +24,7 @@ class CustomTheme with ChangeNotifier {
 
   static ThemeData get darkTheme {
     return ThemeData(
-      primaryColor: Colors.black12,
+      primaryColor: Colors.red,
       backgroundColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
     );

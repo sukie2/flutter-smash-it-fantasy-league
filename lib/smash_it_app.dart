@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smash_it/screens/palyer_selection_screen.dart';
 import 'package:smash_it/theme/themes.dart';
+import 'package:smash_it/ui/auth/sign_up_screen.dart';
 
 class SmashItApp extends StatefulWidget {
   const SmashItApp({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _SmashItAppState extends State<SmashItApp> {
       darkTheme: CustomTheme.darkTheme,
       themeMode: currentTheme.currentTheme,
       home: Scaffold(
-        body: PlayerSelectionScreen(),
+        body: SignUpScreen(),
       ),
     );
   }
