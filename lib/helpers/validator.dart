@@ -8,7 +8,7 @@ class Validator {
     String pattern = r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value!))
-      return 'validator.email'.tr;
+      return 'Please insert a valid email';
     else
       return null;
   }
@@ -17,7 +17,7 @@ class Validator {
     String pattern = r'^.{6,}$';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value!))
-      return 'validator.password'.tr;
+      return 'Password must be at least 6 characters';
     else
       return null;
   }
@@ -26,7 +26,7 @@ class Validator {
     String pattern = r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value!))
-      return 'validator.name'.tr;
+      return 'Oops! name is not valid';
     else
       return null;
   }
