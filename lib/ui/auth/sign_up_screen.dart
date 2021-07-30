@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/helpers/validator.dart';
 import 'package:smash_it/ui/widgets/form_input_field_with_icon.dart';
 
 class SignUpScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final AuthController authController = AuthController.to;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class SignUpScreen extends StatelessWidget {
               validator: Validator().email,
               onChanged: (value) => null,
               onSaved: (value) {},
-              controller: TextEditingController(),
+              controller: authController.emailController,
             ),
             SizedBox(height: 10),
             FormInputFieldWithIcon(
@@ -42,16 +44,15 @@ class SignUpScreen extends StatelessWidget {
               onSaved: (value) {},
               obscureText: true,
               maxLines: 1,
-              controller: TextEditingController(),
+              controller: authController.passwordController,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: TextButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    SystemChannels.textInput.invokeMethod(
-                        'TextInput.hide'); //to hide the keyboard - if any
-                    // authController.registerWithEmailAndPassword(context);
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    authController.registerWithEmailAndPassword(context);
                   }
                 },
                 child: const Text('Submit'),

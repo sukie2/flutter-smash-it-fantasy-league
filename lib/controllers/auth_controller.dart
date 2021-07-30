@@ -1,0 +1,57 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:smash_it/constants/string_constants.dart';
+import 'package:smash_it/models/user_model.dart';
+
+class AuthController extends GetxController {
+  static AuthController to = Get.find();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Rxn<User> firebaseUser = Rxn<User>();
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  // User registration using email and password
+  registerWithEmailAndPassword(BuildContext context) async {
+    try {
+      await _auth
+          .createUserWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text)
+          .then((result) async {
+        print('uID: ' + result.user!.uid.toString());
+        print('email: ' + result.user!.email.toString());
+
+        //create the new user object
+        UserModel _newUser = UserModel(
+            uid: result.user!.uid,
+            email: result.user!.email!,
+            name: nameController.text);
+
+        //create the user in firestore
+        // _createUserFirestore(_newUser, result.user!);
+        // emailController.clear();
+        // passwordController.clear();
+      });
+    } on FirebaseAuthException catch (error) {
+      Get.snackbar(StringConstants.error_user_registration, error.message!,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 10),
+          backgroundColor: Colors.blueGrey,
+          colorText: Colors.white);
+    }
+  }
+
+  @override
+  void onClose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
+  }
+}
