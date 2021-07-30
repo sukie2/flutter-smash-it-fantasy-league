@@ -24,7 +24,7 @@ class SignUpScreen extends StatelessWidget {
               validator: Validator().name,
               onChanged: (value) => null,
               onSaved: (value) {},
-              controller: TextEditingController(),
+              controller: authController.nameController,
             ),
             SizedBox(height: 10),
             FormInputFieldWithIcon(

@@ -33,10 +33,10 @@ class AuthController extends GetxController {
             email: result.user!.email!,
             name: nameController.text);
 
-        //create the user in firestore
-        // _createUserFirestore(_newUser, result.user!);
-        // emailController.clear();
-        // passwordController.clear();
+        // create the user in firestore
+        _createUserFirestore(_newUser, result.user!);
+        emailController.clear();
+        passwordController.clear();
       });
     } on FirebaseAuthException catch (error) {
       Get.snackbar(StringConstants.error_user_registration, error.message!,
@@ -45,6 +45,11 @@ class AuthController extends GetxController {
           backgroundColor: Colors.blueGrey,
           colorText: Colors.white);
     }
+  }
+
+  void _createUserFirestore(UserModel user, User _firebaseUser) {
+    _db.doc('/users/${_firebaseUser.uid}').set(user.toJson());
+    update();
   }
 
   @override
