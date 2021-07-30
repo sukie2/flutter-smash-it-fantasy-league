@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/helpers/validator.dart';
+import 'package:smash_it/ui/auth/sign_up_screen.dart';
 import 'package:smash_it/ui/widgets/form_input_field_with_icon.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -57,11 +59,7 @@ class LoginScreen extends StatelessWidget {
                     Text('No account with us?'),
                     TextButton(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          SystemChannels.textInput
-                              .invokeMethod('TextInput.hide');
-                          authController.registerWithEmailAndPassword(context);
-                        }
+                        Get.to(SignUpScreen());
                       },
                       child: const Text('Sign Up'),
                     ),
