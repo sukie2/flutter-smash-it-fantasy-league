@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:smash_it/ui/auth/sign_up_screen.dart';
 
-class SmashItApp extends StatefulWidget {
-  @override
-  _SmashItAppState createState() => _SmashItAppState();
-}
+import 'constants/app_routes.dart';
 
-class _SmashItAppState extends State<SmashItApp> {
+class SmashItApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Scaffold(
-        body: SignUpScreen(),
-      ),
+      initialRoute: "/",
+      getPages: AppRoutes.routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
