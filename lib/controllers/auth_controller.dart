@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/models/user_model.dart';
 
 class AuthController extends GetxController {
@@ -18,15 +17,12 @@ class AuthController extends GetxController {
   TextEditingController passwordController = TextEditingController();
 
   // User registration using email and password
-  registerWithEmailAndPassword(BuildContext context) async {
+  Future<bool> registerWithEmailAndPassword(BuildContext context) async {
     try {
       await _auth
           .createUserWithEmailAndPassword(
               email: emailController.text, password: passwordController.text)
           .then((result) async {
-        print('uID: ' + result.user!.uid.toString());
-        print('email: ' + result.user!.email.toString());
-
         //create the new user object
         UserModel _newUser = UserModel(
             uid: result.user!.uid,
@@ -34,16 +30,14 @@ class AuthController extends GetxController {
             name: nameController.text);
 
         // create the user in firestore
-        _createUserFirestore(_newUser, result.user!);
+        await _createUserFirestore(_newUser, result.user!);
         emailController.clear();
         passwordController.clear();
+        nameController.clear();
       });
+      return true;
     } on FirebaseAuthException catch (error) {
-      Get.snackbar(StringConstants.app_name, StringConstants.error_login_fail,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 10),
-          backgroundColor: Colors.blueGrey,
-          colorText: Colors.white);
+      return false;
     }
   }
 
@@ -61,7 +55,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void _createUserFirestore(UserModel user, User _firebaseUser) {
+  Future<void> _createUserFirestore(UserModel user, User _firebaseUser) async {
     _db.doc('/users/${_firebaseUser.uid}').set(user.toJson());
     update();
   }
