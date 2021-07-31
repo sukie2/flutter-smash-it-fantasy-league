@@ -74,8 +74,8 @@ class AuthController extends GetxController {
 
   handleAuthChanged(_firebaseUser) async {
     //get user data from firestore
+    await Future.delayed(Duration(seconds: 4));
     if (_firebaseUser == null) {
-      print('Send to signin');
       Get.offAll(LoginScreen());
     } else {
       Get.offAll(HomeScreen());

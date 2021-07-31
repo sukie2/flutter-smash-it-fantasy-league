@@ -14,4 +14,7 @@ class TextConstants {
 
   static const TextStyle kPlayerCategory = TextStyle(
       fontSize: 14.0, color: Colors.black38, fontWeight: FontWeight.bold);
+
+  static const TextStyle kSplashText = TextStyle(
+      fontSize: 18.0, color: Colors.black38, fontWeight: FontWeight.bold);
 }
