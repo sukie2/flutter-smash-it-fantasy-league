@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'controllers/auth_controller.dart';
-import 'smash_it_app.dart';
+import 'ui/smash_it_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'constants/app_routes.dart';
+import '../constants/app_routes.dart';
 
 class SmashItApp extends StatelessWidget {
   @override

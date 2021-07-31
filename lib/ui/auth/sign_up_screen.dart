@@ -87,7 +87,7 @@ class SignUpScreen extends StatelessWidget {
                     child: const Text('Submit'),
                   ),
                   TextButton(
-                    onPressed: () async {
+                    onPressed: () {
                       SystemChannels.textInput.invokeMethod('TextInput.hide');
                       Get.back();
                     },

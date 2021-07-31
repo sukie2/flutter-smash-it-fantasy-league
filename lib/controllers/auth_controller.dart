@@ -5,16 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:smash_it/models/user_model.dart';
+import 'package:smash_it/ui/auth/login_screen.dart';
+import 'package:smash_it/ui/game/home_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController to = Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Rxn<User> firebaseUser = Rxn<User>();
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  // Firebase user a realtime stream
+  Stream<User?> get user => _auth.authStateChanges();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void onReady() async {
+    //run every time auth state changes
+    ever(firebaseUser, handleAuthChanged);
+    firebaseUser.bindStream(user);
+    super.onReady();
+  }
 
   // User registration using email and password
   Future<bool> registerWithEmailAndPassword(BuildContext context) async {
@@ -58,6 +70,24 @@ class AuthController extends GetxController {
   Future<void> _createUserFirestore(UserModel user, User _firebaseUser) async {
     _db.doc('/users/${_firebaseUser.uid}').set(user.toJson());
     update();
+  }
+
+  handleAuthChanged(_firebaseUser) async {
+    //get user data from firestore
+    if (_firebaseUser == null) {
+      print('Send to signin');
+      Get.offAll(LoginScreen());
+    } else {
+      Get.offAll(HomeScreen());
+    }
+  }
+
+  // Sign out
+  Future<void> signOut() {
+    nameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    return _auth.signOut();
   }
 
   @override
