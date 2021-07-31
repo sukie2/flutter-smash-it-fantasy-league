@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/helpers/validator.dart';
 import 'package:smash_it/ui/auth/sign_up_screen.dart';
+import 'package:smash_it/ui/game/home_screen.dart';
 import 'package:smash_it/ui/widgets/form_input_field_with_icon.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -39,32 +41,38 @@ class LoginScreen extends StatelessWidget {
                 maxLines: 1,
                 controller: authController.passwordController,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: TextButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      SystemChannels.textInput.invokeMethod('TextInput.hide');
-                      authController.registerWithEmailAndPassword(context);
+              TextButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    var result = await authController
+                        .signInWithEmailAndPassword(context);
+                    if (result) {
+                      Get.to(HomeScreen());
+                    } else {
+                      Get.snackbar(StringConstants.app_name,
+                          StringConstants.error_login_fail,
+                          snackPosition: SnackPosition.BOTTOM,
+                          duration: Duration(seconds: 3),
+                          backgroundColor:
+                              Get.theme.snackBarTheme.backgroundColor,
+                          colorText: Get.theme.snackBarTheme.actionTextColor);
                     }
-                  },
-                  child: const Text('Login'),
-                ),
+                  }
+                },
+                child: const Text('Login'),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text('No account with us?'),
-                    TextButton(
-                      onPressed: () async {
-                        Get.to(SignUpScreen());
-                      },
-                      child: const Text('Sign Up'),
-                    ),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text('No account with us?'),
+                  TextButton(
+                    onPressed: () async {
+                      Get.to(SignUpScreen());
+                    },
+                    child: const Text('Sign Up'),
+                  ),
+                ],
               ),
             ],
           ),

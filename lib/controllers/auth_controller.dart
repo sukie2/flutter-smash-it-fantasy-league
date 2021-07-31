@@ -39,11 +39,25 @@ class AuthController extends GetxController {
         passwordController.clear();
       });
     } on FirebaseAuthException catch (error) {
-      Get.snackbar(StringConstants.error_user_registration, error.message!,
+      Get.snackbar(StringConstants.app_name, StringConstants.error_login_fail,
           snackPosition: SnackPosition.BOTTOM,
           duration: Duration(seconds: 10),
           backgroundColor: Colors.blueGrey,
           colorText: Colors.white);
+    }
+  }
+
+  //Method to handle user sign in using email and password
+  Future<bool> signInWithEmailAndPassword(BuildContext context) async {
+    try {
+      await _auth.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+      emailController.clear();
+      passwordController.clear();
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 
