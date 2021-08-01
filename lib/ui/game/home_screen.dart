@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:smash_it/controllers/home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
+  final HomeController homeController = HomeController.to;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        onTap: homeController.changeTabIndex,
+        selectedItemColor: Colors.redAccent,
         currentIndex: 0, // this will be set when a new tab is tapped
         items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.mail),
-            title: new Text('Messages'),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('Profile'))
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
         ],
       ),
       body: Container(
