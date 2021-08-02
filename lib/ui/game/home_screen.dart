@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:smash_it/controllers/home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,33 +6,13 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          onTap: homeController.changeTabIndex,
-          selectedItemColor: Colors.redAccent,
-          unselectedItemColor: Colors.black,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          currentIndex: homeController
-              .tabIndex.value, // this will be set when a new tab is tapped
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.history), label: 'History'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: 'Settings')
-          ],
-        ),
-      ),
       body: Container(
           child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             // Display a placeholder widget to visualize the shrinking size.
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('Score'),
+              title: Text('Scores'),
             ),
             expandedHeight: 100,
             collapsedHeight: 60,
