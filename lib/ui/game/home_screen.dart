@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:smash_it/controllers/auth_controller.dart';
+import 'package:smash_it/ui/auth/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  final AuthController authController = AuthController.to;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout_rounded),
+            tooltip: 'Logout',
+            onPressed: () async {
+              await authController.signOut();
+              Get.to(() => LoginScreen());
+            },
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0, // this will be set when a new tab is tapped
         items: [

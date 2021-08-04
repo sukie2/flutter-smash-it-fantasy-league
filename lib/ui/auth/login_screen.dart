@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,10 +10,13 @@ import 'package:smash_it/ui/auth/sign_up_screen.dart';
 import 'package:smash_it/ui/game/home_screen.dart';
 import 'package:smash_it/ui/widgets/form_input_field_with_icon.dart';
 
+import 'forgot_password.dart';
+
 class LoginScreen extends StatelessWidget {
   final AuthController authController = AuthController.to;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var isLoading = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,30 +50,43 @@ class LoginScreen extends StatelessWidget {
                     maxLines: 1,
                     controller: authController.passwordController,
                   ),
-                  TextButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        isLoading.value = true;
-                        SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        var result = await authController
-                            .signInWithEmailAndPassword(context);
-                        if (result) {
-                          isLoading.value = false;
-                          Get.to(HomeScreen());
-                        } else {
-                          isLoading.value = false;
-                          Get.snackbar(StringConstants.app_name,
-                              StringConstants.error_login_fail,
-                              snackPosition: SnackPosition.BOTTOM,
-                              duration: Duration(seconds: 3),
-                              backgroundColor:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Get.to(() => ForgotPasswordScreen());
+                        },
+                        child: Text('Forgot Password'),
+                      ),
+                      SizedBox(height: 10),
+                      TextButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            isLoading.value = true;
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.hide');
+                            var result = await authController
+                                .signInWithEmailAndPassword(context);
+                            if (result) {
+                              isLoading.value = false;
+                              Get.to(HomeScreen());
+                            } else {
+                              isLoading.value = false;
+                              Get.snackbar(StringConstants.app_name,
+                                  StringConstants.error_login_fail,
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  duration: Duration(seconds: 3),
+                                  backgroundColor:
                                   Get.theme.snackBarTheme.backgroundColor,
-                              colorText:
+                                  colorText:
                                   Get.theme.snackBarTheme.actionTextColor);
-                        }
-                      }
-                    },
-                    child: const Text('Login'),
+                            }
+                          }
+                        },
+                        child: const Text('Login',style: TextStyle(fontWeight: FontWeight.bold),),
+                      ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
