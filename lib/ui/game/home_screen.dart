@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:smash_it/constants/size_contants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/controllers/home_controller.dart';
-import 'package:smash_it/ui/auth/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
@@ -11,43 +10,58 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout_rounded),
-            tooltip: 'Logout',
-            onPressed: () async {
-              await authController.signOut();
-              Get.to(() => LoginScreen());
-            },
-          ),
-        ],
-      ),
       body: Container(
           child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            expandedHeight: 300,
+            collapsedHeight: 150,
             // Display a placeholder widget to visualize the shrinking size.
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('Scores'),
+              title: Padding(
+                padding: EdgeInsets.only(
+                    top: SizeConstants.base3x, left: SizeConstants.base2x),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.account_circle,
+                      color: Colors.white,
+                      size: 85,
+                    ),
+                    Text('John Doe'),
+                    Text('4498'),
+                    Text('(Master IV)')
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                ),
+              ),
             ),
-            expandedHeight: 100,
-            collapsedHeight: 60,
           ),
           SliverAppBar(
+            toolbarHeight: 30,
             // Display a placeholder widget to visualize the shrinking size.
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('Upcoming Matches'),
-            ),
-            expandedHeight: 100,
-            collapsedHeight: 60,
+                title: Padding(
+              padding: EdgeInsets.only(
+                  top: SizeConstants.base3x, left: SizeConstants.base2x),
+              child: Column(
+                children: [
+                  Text('Upcoming matches'),
+                ],
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+              ),
+            )),
+            expandedHeight: 50,
+            collapsedHeight: 40,
             pinned: true,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Container(
-                  color: Colors.blueGrey,
+                  color: Colors.white,
                   height: 40,
                   child: Text('Match $index'),
                 );
