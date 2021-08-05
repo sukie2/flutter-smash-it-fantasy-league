@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smash_it/controllers/home_controller.dart';
 import 'package:get/get.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
+import 'package:smash_it/controllers/home_controller.dart';
 import 'package:smash_it/ui/auth/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
