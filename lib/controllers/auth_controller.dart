@@ -67,6 +67,12 @@ class AuthController extends GetxController {
     }
   }
 
+  //Method to handle password reset
+  Future<void> resetPassword(BuildContext context) async {
+    await _auth.sendPasswordResetEmail(email: emailController.text.trim());
+    emailController.clear();
+  }
+
   Future<void> _createUserFirestore(UserModel user, User _firebaseUser) async {
     _db.doc('/users/${_firebaseUser.uid}').set(user.toJson());
     update();
