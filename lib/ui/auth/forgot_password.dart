@@ -42,7 +42,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => {
-                          Navigator.pop(context, 'OK'),
+                          Get.back(),
                           Get.to(() => LoginScreen())
                         },
                         child: const Text('OK'),
