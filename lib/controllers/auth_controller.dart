@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:smash_it/models/user_model.dart';
 import 'package:smash_it/ui/auth/login_screen.dart';
-import 'package:smash_it/ui/game/home_screen.dart';
+import 'package:smash_it/ui/dashboard_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController to = Get.find();
@@ -84,7 +84,7 @@ class AuthController extends GetxController {
     if (_firebaseUser == null) {
       Get.offAll(LoginScreen());
     } else {
-      Get.offAll(HomeScreen());
+      Get.offAll(DashboardScreen());
     }
   }
 
