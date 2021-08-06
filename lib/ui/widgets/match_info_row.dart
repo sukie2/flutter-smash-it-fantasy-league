@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smash_it/constants/size_contants.dart';
+import 'package:smash_it/constants/size_constants.dart';
 
 class MatchInfoWidget extends StatelessWidget {
   @override
@@ -15,8 +15,20 @@ class MatchInfoWidget extends StatelessWidget {
                 top: SizeConstants.baseHalf,
                 bottom: SizeConstants.baseHalf,
                 left: SizeConstants.base2x),
-            child: Text(
-              'ICC T20 World Cup, 2021',
+            child: Padding(
+              padding: EdgeInsets.only(right: SizeConstants.baseHalf),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'ICC T20 World Cup, 2021',
+                  ),
+                  Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                  )
+                ],
+              ),
             ),
           ),
         ),

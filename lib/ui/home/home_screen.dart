@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smash_it/constants/size_contants.dart';
+import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/controllers/home_controller.dart';
 import 'package:smash_it/ui/home/up_coming_matches.dart';
