@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smash_it/constants/size_contants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/controllers/home_controller.dart';
+import 'package:smash_it/ui/home/up_coming_matches.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
@@ -60,11 +61,7 @@ class HomeScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                return Container(
-                  color: Colors.white,
-                  height: 40,
-                  child: Text('Match $index'),
-                );
+                return UpComingMatchRow();
               },
               childCount: 100,
             ),
