@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smash_it/controllers/home_controller.dart';
-import 'package:smash_it/ui/game/home_screen.dart';
 import 'package:smash_it/ui/history/history_screen.dart';
 import 'package:smash_it/ui/profile/profile_screen.dart';
+
+import 'home/home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:smash_it/ui/auth/login_screen.dart';
 import 'package:smash_it/ui/auth/sign_up_screen.dart';
-import 'package:smash_it/ui/game/home_screen.dart';
+import 'package:smash_it/ui/home/home_screen.dart';
 import 'package:smash_it/ui/splash_screen.dart';
 
 class AppRoutes {

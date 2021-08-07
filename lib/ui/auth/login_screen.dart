@@ -7,7 +7,7 @@ import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/helpers/validator.dart';
 import 'package:smash_it/ui/auth/sign_up_screen.dart';
-import 'package:smash_it/ui/game/home_screen.dart';
+import 'package:smash_it/ui/home/home_screen.dart';
 import 'package:smash_it/ui/widgets/form_input_field_with_icon.dart';
 
 import 'forgot_password.dart';
@@ -78,13 +78,16 @@ class LoginScreen extends StatelessWidget {
                                   snackPosition: SnackPosition.BOTTOM,
                                   duration: Duration(seconds: 3),
                                   backgroundColor:
-                                  Get.theme.snackBarTheme.backgroundColor,
+                                      Get.theme.snackBarTheme.backgroundColor,
                                   colorText:
-                                  Get.theme.snackBarTheme.actionTextColor);
+                                      Get.theme.snackBarTheme.actionTextColor);
                             }
                           }
                         },
-                        child: const Text('Login',style: TextStyle(fontWeight: FontWeight.bold),),
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
