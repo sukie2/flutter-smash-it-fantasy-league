@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:smash_it/controllers/profile_controller.dart';
 import 'package:smash_it/models/user_model.dart';
 import 'package:smash_it/ui/auth/login_screen.dart';
 import 'package:smash_it/ui/dashboard_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController to = Get.find();
+  static ProfileController profileController = ProfileController.to;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Rxn<User> firebaseUser = Rxn<User>();
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -36,13 +38,17 @@ class AuthController extends GetxController {
               email: emailController.text, password: passwordController.text)
           .then((result) async {
         //create the new user object
+        var name = nameController.text;
+        var uid = result.user!.uid;
         UserModel _newUser = UserModel(
-            uid: result.user!.uid,
+            uid: uid,
             email: result.user!.email!,
-            name: nameController.text);
+            name: name);
 
         // create the user in firestore
         await _createUserFirestore(_newUser, result.user!);
+        await profileController.createUserProfile(uid, name);
+
         emailController.clear();
         passwordController.clear();
         nameController.clear();
