@@ -12,5 +12,5 @@ void main() async {
   Get.put<AuthController>(AuthController());
   Get.put<HomeController>(HomeController());
   Get.put<ProfileController>(ProfileController());
-  // runApp(SmashItApp());
+  runApp(SmashItApp());
 }
