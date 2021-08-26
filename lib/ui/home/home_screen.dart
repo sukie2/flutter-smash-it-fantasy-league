@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/controllers/home_controller.dart';
 import 'package:smash_it/ui/home/up_coming_matches.dart';
+import 'package:smash_it/ui/palyer_selection_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
@@ -48,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                   top: SizeConstants.base3x, left: SizeConstants.base2x),
               child: Column(
                 children: [
-                  Text('Upcoming matches'),
+                  Text('Upcoming matchess'),
                 ],
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,7 +63,13 @@ class HomeScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                return UpComingMatchRow();
+                return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  child: UpComingMatchRow(),
+                  onTap: () {
+                    Get.to(PlayerSelectionScreen());
+                  },
+                );
               },
               childCount: 100,
             ),
