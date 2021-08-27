@@ -5,8 +5,6 @@ import 'package:smash_it/ui/widgets/game_info_widget.dart';
 import 'package:smash_it/ui/widgets/player_row.dart';
 
 class PlayerSelectionScreen extends StatefulWidget {
-  const PlayerSelectionScreen({Key? key}) : super(key: key);
-
   @override
   _PlayerSelectionScreenState createState() => _PlayerSelectionScreenState();
 }
@@ -19,27 +17,45 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          floating: true,
-          expandedHeight: 200,
-          backgroundColor: Colors.blueGrey,
-          flexibleSpace: FlexibleSpaceBar(
-            background: GameInfoWidget(),
-            title: Text('SL vs IND'),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            floating: true,
+            expandedHeight: 200,
+            backgroundColor: Colors.blueGrey,
+            flexibleSpace: FlexibleSpaceBar(
+              background: GameInfoWidget(),
+              title: Text('SL vs IND'),
+            ),
           ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return PlayerRow(playerList[index]);
-            },
-            childCount: 2, // 1000 list items
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return PlayerRow(playerList[index]);
+              },
+              childCount: 2, // 1000 list items
+            ),
           ),
-        ),
-      ],
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              ///no.of items in the horizontal axis
+              crossAxisCount: 6,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Container(
+                  alignment: Alignment.center,
+                  color: Colors.teal[100 * (index % 9)],
+                  child: Text('grid item $index'),
+                );
+              },
+              childCount: 12,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
