@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/models/player.dart';
 import 'package:smash_it/models/player_row_data.dart';
 import 'package:smash_it/ui/widgets/player_row.dart';
@@ -44,24 +45,24 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
             ),
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            padding: EdgeInsets.all(0),
-            width: double.infinity,
-            child: GridView.count(
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 6,
-              children: List.generate(12, (index) {
-                return CircleAvatar(
-                  child: Text(
-                    'P $index',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                );
-              }),
-            ),
-          ),
+        GridView.count(
+          padding: EdgeInsets.only(
+              top: SizeConstants.base2x,
+              bottom: SizeConstants.base3x,
+              left: SizeConstants.base2x,
+              right: SizeConstants.base2x),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 6,
+          childAspectRatio: 1.1,
+          children: List.generate(12, (index) {
+            return CircleAvatar(
+              child: Text(
+                'P $index',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            );
+          }),
         )
       ],
     ));
