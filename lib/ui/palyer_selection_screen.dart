@@ -18,6 +18,17 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
     PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder')),
     PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder'))
   ];
+  List<PlayerRowData> selectedList = [
+    PlayerRowData(Player('Wanindu Hasaranga', 9000, 'Bowling allrounder')),
+    PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder')),
+    PlayerRowData(Player('Dasun Shanaka1', 5000, 'Batting allrounder')),
+    PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder')),
+    PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder')),
+    PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder')),
+    PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder')),
+    PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder')),
+    PlayerRowData(Player('Dasun Shanaka', 5000, 'Batting allrounder'))
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +66,14 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 6,
           childAspectRatio: 1.1,
-          children: List.generate(12, (index) {
-            return CircleAvatar(
-              child: Text(
-                'P $index',
-                style: Theme.of(context).textTheme.headline5,
+          children: List.generate(selectedList.length, (index) {
+            return Container(
+              padding: EdgeInsets.all(3),
+              child: CircleAvatar(
+                child: Text(
+                  selectedList[index].player.name.substring(0, 2),
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ),
             );
           }),
