@@ -15,11 +15,11 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
           child: CustomScrollView(
-        slivers: <Widget>[
+        slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             expandedHeight: 300,
             collapsedHeight: 150,
-            // Display a placeholder widget to visualize the shrinking size.
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
                 padding: EdgeInsets.only(
@@ -42,8 +42,8 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 30,
-            // Display a placeholder widget to visualize the shrinking size.
             flexibleSpace: FlexibleSpaceBar(
                 title: Padding(
               padding: EdgeInsets.only(
