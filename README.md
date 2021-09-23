@@ -3,3 +3,4 @@
 Tech stack
  - Flutter
  - Getx
+ - Firebase
