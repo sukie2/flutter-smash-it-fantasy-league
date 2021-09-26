@@ -18,31 +18,6 @@ class HomeScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: 300,
-            collapsedHeight: 150,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Padding(
-                padding: EdgeInsets.only(
-                    top: SizeConstants.base3x, left: SizeConstants.base2x),
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.account_circle,
-                      color: Colors.white,
-                      size: 85,
-                    ),
-                    Text('John Doe'),
-                    Text('4498'),
-                    Text('(Master IV)')
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                ),
-              ),
-            ),
-          ),
-          SliverAppBar(
-            automaticallyImplyLeading: false,
             toolbarHeight: 30,
             flexibleSpace: FlexibleSpaceBar(
                 title: Padding(
@@ -50,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                   top: SizeConstants.base3x, left: SizeConstants.base2x),
               child: Column(
                 children: [
-                  Text('Upcoming matchess'),
+                  Text('Upcoming matches'),
                 ],
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
