@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smash_it/controllers/home_controller.dart';
-import 'package:smash_it/ui/history/history_screen.dart';
 import 'package:smash_it/ui/profile/profile_screen.dart';
 
+import 'history/history_screen.dart';
 import 'home/home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -13,8 +13,9 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-        () => IndexedStack(
-          index: homeController.tabIndex.value,
+        () => PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: homeController.pageController.value,
           children: [
             HomeScreen(),
             HistoryScreen(),
@@ -24,14 +25,16 @@ class DashboardScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
-          onTap: homeController.changeTabIndex,
+          onTap: (value) {
+            navigateToPage(value);
+          },
           selectedItemColor: Colors.redAccent,
           unselectedItemColor: Colors.black,
           showSelectedLabels: false,
           showUnselectedLabels: false,
           backgroundColor: Colors.white,
           elevation: 0,
-          currentIndex: homeController.tabIndex.value,
+          currentIndex: homeController.page.value,
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
@@ -42,5 +45,14 @@ class DashboardScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  navigateToPage(int input) {
+    homeController.animateTo(input);
+    homeController.onPageChanged(input);
+    // if(input == 0){
+    //   drawer.onPageChanged(0);
+    //   drawer.resetController(input);
+    // }
   }
 }

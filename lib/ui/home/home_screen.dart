@@ -1,56 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:smash_it/constants/size_constants.dart';
-import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/controllers/home_controller.dart';
-import 'package:smash_it/ui/home/up_coming_matches.dart';
-import 'package:smash_it/ui/palyer_selection_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
-  final AuthController authController = AuthController.to;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          child: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            toolbarHeight: 30,
-            flexibleSpace: FlexibleSpaceBar(
-                title: Padding(
-              padding: EdgeInsets.only(
-                  top: SizeConstants.base3x, left: SizeConstants.base2x),
-              child: Column(
-                children: [
-                  Text('Upcoming matches'),
-                ],
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-              ),
-            )),
-            expandedHeight: 50,
-            collapsedHeight: 40,
-            pinned: true,
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  child: UpComingMatchRow(),
-                  onTap: () {
-                    Get.to(PlayerSelectionScreen());
-                  },
-                );
-              },
-              childCount: 100,
-            ),
-          ),
-        ],
-      )),
+    return StreamBuilder<QuerySnapshot>(
+      stream: homeController.getData(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        return ListView(
+          children: snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            return ListTile(
+              title: Text(data['name']),
+              subtitle: Text(data['type']),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }
