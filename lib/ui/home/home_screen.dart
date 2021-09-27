@@ -7,28 +7,30 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: homeController.getData(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
+    return Scaffold(
+      body: StreamBuilder<QuerySnapshot>(
+        stream: homeController.getData(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
 
-        return ListView(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
-            return ListTile(
-              title: Text(data['name']),
-              subtitle: Text(data['type']),
-            );
-          }).toList(),
-        );
-      },
+          return ListView(
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+              return ListTile(
+                title: Text(data['name']),
+                subtitle: Text(data['type']),
+              );
+            }).toList(),
+          );
+        },
+      ),
     );
   }
 }

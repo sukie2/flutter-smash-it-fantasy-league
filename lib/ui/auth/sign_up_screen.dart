@@ -65,8 +65,8 @@ class SignUpScreen extends StatelessWidget {
                             .registerWithEmailAndPassword(context);
                         if (result) {
                           isLoading.value = false;
-                          Get.snackbar(StringConstants.app_name,
-                              StringConstants.success_user_registration,
+                          Get.snackbar(Strings.app_name,
+                              Strings.success_user_registration,
                               snackPosition: SnackPosition.BOTTOM,
                               duration: Duration(seconds: 3),
                               backgroundColor: Colors.green.shade400,
@@ -75,8 +75,8 @@ class SignUpScreen extends StatelessWidget {
                           Get.to(LoginScreen());
                         } else {
                           isLoading.value = false;
-                          Get.snackbar(StringConstants.app_name,
-                              StringConstants.error_user_registration,
+                          Get.snackbar(
+                              Strings.app_name, Strings.error_user_registration,
                               snackPosition: SnackPosition.BOTTOM,
                               duration: Duration(seconds: 3),
                               backgroundColor: Colors.blueGrey,

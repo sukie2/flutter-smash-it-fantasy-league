@@ -73,8 +73,8 @@ class LoginScreen extends StatelessWidget {
                               Get.to(HomeScreen());
                             } else {
                               isLoading.value = false;
-                              Get.snackbar(StringConstants.app_name,
-                                  StringConstants.error_login_fail,
+                              Get.snackbar(
+                                  Strings.app_name, Strings.error_login_fail,
                                   snackPosition: SnackPosition.BOTTOM,
                                   duration: Duration(seconds: 3),
                                   backgroundColor:
