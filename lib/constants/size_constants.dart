@@ -1,4 +1,4 @@
-class SizeConstants {
+class Sizes {
   static const baseHalf = 8.0;
   static const base = 8.0;
   static const base2x = 16.0;

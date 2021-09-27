@@ -16,8 +16,7 @@ class HistoryScreen extends StatelessWidget {
             // Display a placeholder widget to visualize the shrinking size.
             flexibleSpace: FlexibleSpaceBar(
                 title: Padding(
-              padding: EdgeInsets.only(
-                  top: SizeConstants.base3x, left: SizeConstants.base2x),
+              padding: EdgeInsets.only(top: Sizes.base3x, left: Sizes.base2x),
               child: Column(
                 children: [
                   Text('Your past matches'),
