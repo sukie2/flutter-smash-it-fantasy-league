@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/home_controller.dart';
+import 'package:smash_it/models/match_model.dart';
 import 'package:smash_it/ui/widgets/slide_match_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -51,10 +52,12 @@ class HomeScreen extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               DocumentSnapshot document = snapshot.data!.docs[index];
               return SlideMatchCard(
-                title: document['name'],
-                address: document['type'],
-                rating: "3",
-                img: 'images/SLC.png',
+                match: MatchModel(
+                    team1: 'Australia',
+                    team2: 'Sri Lanka',
+                    tournamentName: document['name'],
+                    groundName: 'MCG',
+                    submissions: '125'),
               );
             },
           ),
@@ -77,6 +80,7 @@ class HomeScreen extends StatelessWidget {
 
         return SliverToBoxAdapter(
           child: Container(
+            height: 30,
             child: ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,

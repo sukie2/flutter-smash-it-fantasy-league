@@ -1,10 +1,16 @@
-class Match {
+class MatchModel {
   final String team1;
-  final double team2;
+  final String team2;
   final String tournamentName;
   final String groundName;
+  final String submissions;
 
-  Match(this.team1, this.team2, this.tournamentName, this.groundName);
+  MatchModel(
+      {required this.team1,
+      required this.team2,
+      required this.tournamentName,
+      required this.groundName,
+      required this.submissions});
 
   String getCountryFlag({teamName: String}) {
     switch (teamName) {
