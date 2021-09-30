@@ -18,14 +18,11 @@ class SlideMatchCard extends StatelessWidget {
       child: Align(
         alignment: Alignment.topLeft,
         child: Container(
-          color: Colors.red,
-          padding: EdgeInsets.all(0),
           width: MediaQuery.of(context).size.width / 1.5,
-          height: MediaQuery.of(context).size.width / 2.2,
           child: Card(
             color: FantasyColors.SecondaryColor,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(Spacing.base)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             elevation: 7.0,
             child: Column(
               children: [
