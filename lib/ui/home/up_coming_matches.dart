@@ -13,7 +13,7 @@ class UpComingMatchRow extends StatelessWidget {
       children: [
         MatchInfoWidget(),
         Padding(
-          padding: EdgeInsets.all(Sizes.base2x),
+          padding: EdgeInsets.all(Spacing.base2x),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

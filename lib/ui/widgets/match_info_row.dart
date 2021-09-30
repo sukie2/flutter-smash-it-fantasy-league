@@ -12,11 +12,11 @@ class MatchInfoWidget extends StatelessWidget {
           color: Colors.pinkAccent,
           child: Padding(
             padding: EdgeInsets.only(
-                top: Sizes.baseHalf,
-                bottom: Sizes.baseHalf,
-                left: Sizes.base2x),
+                top: Spacing.baseHalf,
+                bottom: Spacing.baseHalf,
+                left: Spacing.base2x),
             child: Padding(
-              padding: EdgeInsets.only(right: Sizes.baseHalf),
+              padding: EdgeInsets.only(right: Spacing.baseHalf),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -34,7 +34,9 @@ class MatchInfoWidget extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-              left: Sizes.base2x, right: Sizes.base2x, top: Sizes.baseHalf),
+              left: Spacing.base2x,
+              right: Spacing.base2x,
+              top: Spacing.baseHalf),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

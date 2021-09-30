@@ -58,10 +58,10 @@ class _PlayerSelectionScreenState extends State<PlayerSelectionScreen> {
         ),
         GridView.count(
           padding: EdgeInsets.only(
-              top: Sizes.base2x,
-              bottom: Sizes.base3x,
-              left: Sizes.base2x,
-              right: Sizes.base2x),
+              top: Spacing.base2x,
+              bottom: Spacing.base3x,
+              left: Spacing.base2x,
+              right: Spacing.base2x),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 6,

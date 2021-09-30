@@ -1,4 +1,5 @@
 class MatchModel {
+  final matchNumber;
   final String team1;
   final String team2;
   final String tournamentName;
@@ -6,7 +7,8 @@ class MatchModel {
   final String submissions;
 
   MatchModel(
-      {required this.team1,
+      {required this.matchNumber,
+      required this.team1,
       required this.team2,
       required this.tournamentName,
       required this.groundName,
