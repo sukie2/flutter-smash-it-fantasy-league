@@ -33,6 +33,85 @@ class HomeScreen extends StatelessWidget {
             ),
             buildUpcomingMatchesTitleBar(),
             buildUpComingMatchesList(context),
+            buildTopRankPlayer(),
+            buildTopRankList(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildTopRankList(BuildContext context) {
+    return SliverToBoxAdapter(
+        child: Container(
+      height: 200,
+      child: StreamBuilder<QuerySnapshot>(
+        stream: homeController.getData(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          return Container(
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemCount: snapshot.data?.docs.length,
+              itemBuilder: (BuildContext context, int index) {
+                DocumentSnapshot document = snapshot.data!.docs[index];
+                return SlideMatchCard(
+                  match: MatchModel(
+                      matchNumber: '1st',
+                      team1: 'Australia',
+                      team2: 'Sri Lanka',
+                      tournamentName: document['name'],
+                      groundName: 'MCG',
+                      submissions: '125'),
+                );
+              },
+            ),
+          );
+        },
+      ),
+    ));
+  }
+
+  buildTopRankPlayer() {
+    return SliverToBoxAdapter(
+      child: Container(
+        padding: EdgeInsets.only(bottom: Spacing.base),
+        child: Stack(
+          children: [
+            Image(image: AssetImage('images/SLC.png')),
+            Row(
+              textBaseline: TextBaseline.alphabetic,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              children: [
+                Text(Strings.upcoming_matches,
+                    style: GoogleFonts.oswald(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white)),
+                TextButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      overlayColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                    ),
+                    child: Text(
+                      Strings.see_all,
+                      style: GoogleFonts.lato(
+                          fontSize: 12,
+                          decoration: TextDecoration.underline,
+                          color: Colors.white),
+                    ))
+              ],
+            ),
           ],
         ),
       ),
