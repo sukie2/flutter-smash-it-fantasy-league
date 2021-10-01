@@ -1,7 +1,7 @@
-import 'package:smash_it/models/player.dart';
+import 'package:smash_it/models/player_model.dart';
 
 class PlayerRowData {
-  final Player player;
+  final PlayerModel player;
   bool isSelected = false;
 
   PlayerRowData(this.player);

@@ -61,7 +61,7 @@ class _PlayerRowState extends State<PlayerRow> {
                         textStyle: TextConstants.kPlayerName),
                   ),
                   Text(
-                    widget.playerRow.player.type,
+                    widget.playerRow.player.role,
                     style: GoogleFonts.oswald(
                         textStyle: TextConstants.kPlayerCategory),
                   ),
@@ -75,7 +75,7 @@ class _PlayerRowState extends State<PlayerRow> {
                   Padding(
                       padding: EdgeInsets.only(right: 10),
                       child: Text(
-                        '\$${widget.playerRow.player.cost}',
+                        '\$${widget.playerRow.player.points}',
                         style: TextConstants.kPlayerCost,
                       )),
                   Icon(
