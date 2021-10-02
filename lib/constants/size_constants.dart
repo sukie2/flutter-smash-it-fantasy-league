@@ -1,4 +1,5 @@
 class Spacing {
+  static const baseQuarter = 2.0;
   static const baseHalf = 8.0;
   static const base = 8.0;
   static const base2x = 16.0;

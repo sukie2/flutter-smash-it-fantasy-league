@@ -103,9 +103,6 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       Get.to(ProfileScreen());
                     },
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(Colors.red),
-                    ),
                     child: Text(
                       Strings.see_all,
                       style: GoogleFonts.lato(
@@ -124,7 +121,6 @@ class HomeScreen extends StatelessWidget {
   buildUpcomingMatchesTitleBar() {
     return SliverToBoxAdapter(
       child: Container(
-        color: Colors.red,
         padding: EdgeInsets.only(bottom: Spacing.base),
         child: Row(
           textBaseline: TextBaseline.alphabetic,
@@ -155,7 +151,7 @@ class HomeScreen extends StatelessWidget {
   buildUpComingMatchesList(BuildContext context) {
     return SliverToBoxAdapter(
         child: Container(
-      height: 150,
+      height: 200,
       child: StreamBuilder<QuerySnapshot>(
         stream: homeController.getMatches(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

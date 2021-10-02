@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +20,7 @@ class SlideMatchCard extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width / 1.5,
         child: Card(
+          shadowColor: Colors.grey,
           color: FantasyColors.SecondaryColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -28,41 +28,68 @@ class SlideMatchCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildDateRow(match.date),
+              buildInfoRow(match),
               buildCountryRow(match.team1),
               buildCountryRow(match.team2),
-              Text(match.tournamentName),
+              buildDateRow(match)
             ],
           ),
         ),
       ),
     );
   }
-}
 
-buildDateRow(Timestamp date) {
-  return Padding(
-    padding: EdgeInsets.fromLTRB(
-        Spacing.base2x, Spacing.base, Spacing.base2x, Spacing.base),
-    child: Text(
-      date.getFormattedDate(),
-      style: GoogleFonts.bebasNeue(fontSize: 14, color: Colors.white),
-    ),
-  );
-}
+  buildCountryRow(String country) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(Spacing.base2x, Spacing.baseHalf,
+          Spacing.base2x, Spacing.baseQuarter),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Image(
+            height: 30,
+            width: 50,
+            image: AssetImage(MatchModel.getCountryFlag(teamName: country)),
+            fit: BoxFit.cover,
+          ),
+          SizedBox(width: Spacing.baseHalf),
+          Text(
+            country,
+            style: GoogleFonts.cabin(fontSize: 16, color: Colors.white),
+          ),
+        ],
+      ),
+    );
+  }
 
-buildCountryRow(String country) {
-  return Row(
-    children: [
-      Image(
-        height: 40,
-        width: 60,
-        image: AssetImage(MatchModel.getCountryFlag(teamName: country)),
+  buildInfoRow(MatchModel match) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+          Spacing.base2x, Spacing.base, Spacing.base2x, Spacing.base),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            match.tournamentName,
+            style: GoogleFonts.oswald(fontSize: 18, color: Colors.white),
+          ),
+          Text(
+            "Match ${match.matchNumber}",
+            style: GoogleFonts.cabin(fontSize: 14, color: Colors.white),
+          )
+        ],
       ),
-      Text(
-        country,
-        style: TextStyle(color: Colors.white),
+    );
+  }
+
+  buildDateRow(MatchModel match) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+          Spacing.base2x, Spacing.base, Spacing.base2x, Spacing.base),
+      child: Text(
+        "Starts at ${match.date.getFormattedDateAndTime()} ",
+        style: GoogleFonts.cabin(fontSize: 12, color: Colors.white),
       ),
-    ],
-  );
+    );
+  }
 }
