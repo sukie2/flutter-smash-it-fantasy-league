@@ -10,74 +10,73 @@ import 'package:smash_it/ui/widgets/slide_match_card.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FantasyColors.PrimaryColor,
       body: Padding(
         padding: const EdgeInsets.all(Spacing.base2x),
-        child: CustomScrollView(
-          shrinkWrap: true,
-          slivers: [
-            SliverAppBar(
-              backgroundColor: FantasyColors.PrimaryColor,
-              elevation: 0,
-              pinned: true,
-              expandedHeight: 100,
-              flexibleSpace: FlexibleSpaceBar(
-                titlePadding: EdgeInsets.only(top: 0, bottom: Spacing.base2x),
-                centerTitle: false,
-                title: buildTitleBar(),
-              ),
-            ),
-            buildUpcomingMatchesTitleBar(),
-            buildUpComingMatchesList(context),
-            buildTopRankPlayer(),
-            buildTopRankList(context),
-          ],
+        child: StreamBuilder<QuerySnapshot>(
+          stream: homeController.getPlayerData(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            return CustomScrollView(
+              shrinkWrap: true,
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: FantasyColors.PrimaryColor,
+                  automaticallyImplyLeading: false,
+                  elevation: 0,
+                  pinned: true,
+                  expandedHeight: 100,
+                  flexibleSpace: FlexibleSpaceBar(
+                    titlePadding:
+                        EdgeInsets.only(top: 0, bottom: Spacing.base2x),
+                    centerTitle: false,
+                    title: buildTitleBar(),
+                  ),
+                ),
+                buildUpcomingMatchesTitleBar(),
+                buildUpComingMatchesList(context),
+                buildTopRankList(context, snapshot),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
-  buildTopRankList(BuildContext context) {
-    return SliverToBoxAdapter(
-        child: Container(
-      height: 200,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: homeController.getData(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
+  buildTopRankList(BuildContext context, AsyncSnapshot snapshot) {
+    if (snapshot.hasError) {
+      return SliverToBoxAdapter(child: Text('Something went wrong'));
+    }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
-          }
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return SliverToBoxAdapter(child: Text("Loading"));
+    }
 
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          DocumentSnapshot document = snapshot.data!.docs[index];
           return Container(
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemCount: snapshot.data?.docs.length,
-              itemBuilder: (BuildContext context, int index) {
-                DocumentSnapshot document = snapshot.data!.docs[index];
-                return SlideMatchCard(
-                  match: MatchModel(
-                      matchNumber: '1st',
-                      team1: 'Australia',
-                      team2: 'Sri Lanka',
-                      tournamentName: document['name'],
-                      groundName: 'MCG',
-                      submissions: '125'),
-                );
-              },
+            alignment: Alignment.center,
+            height: 200,
+            child: SlideMatchCard(
+              match: MatchModel(
+                  matchNumber: '1st',
+                  team1: 'Australia',
+                  team2: 'Sri Lanka',
+                  tournamentName: document['name'],
+                  groundName: 'MCG',
+                  submissions: '125'),
             ),
           );
         },
+        childCount: snapshot.data!.docs.length,
       ),
-    ));
+    );
   }
 
   buildTopRankPlayer() {

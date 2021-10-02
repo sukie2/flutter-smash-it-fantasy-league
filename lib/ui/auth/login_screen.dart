@@ -7,7 +7,7 @@ import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/helpers/validator.dart';
 import 'package:smash_it/ui/auth/sign_up_screen.dart';
-import 'package:smash_it/ui/home/home_screen.dart';
+import 'package:smash_it/ui/dashboard_screen.dart';
 import 'package:smash_it/ui/widgets/form_input_field_with_icon.dart';
 
 import 'forgot_password.dart';
@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                                 .signInWithEmailAndPassword(context);
                             if (result) {
                               isLoading.value = false;
-                              Get.to(HomeScreen());
+                              Get.to(DashboardScreen());
                             } else {
                               isLoading.value = false;
                               Get.snackbar(
