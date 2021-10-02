@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/home_controller.dart';
 import 'package:smash_it/models/match_model.dart';
+import 'package:smash_it/ui/profile/profile_screen.dart';
 import 'package:smash_it/ui/widgets/slide_match_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,7 +17,8 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: FantasyColors.PrimaryColor,
       body: Padding(
-        padding: const EdgeInsets.all(Spacing.base2x),
+        padding: const EdgeInsets.fromLTRB(
+            Spacing.base2x, Spacing.base2x, Spacing.base2x, 0),
         child: StreamBuilder<QuerySnapshot>(
           stream: homeController.getPlayerData(),
           builder:
@@ -38,6 +41,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 buildUpcomingMatchesTitleBar(),
                 buildUpComingMatchesList(context),
+                buildTopRankPlayer(),
                 buildTopRankList(context, snapshot),
               ],
             );
@@ -59,7 +63,7 @@ class HomeScreen extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          DocumentSnapshot document = snapshot.data!.docs[index];
+          DocumentSnapshot? document = snapshot.data?.docs[index];
           return Container(
             alignment: Alignment.center,
             height: 200,
@@ -68,13 +72,13 @@ class HomeScreen extends StatelessWidget {
                   matchNumber: '1st',
                   team1: 'Australia',
                   team2: 'Sri Lanka',
-                  tournamentName: document['name'],
+                  tournamentName: document?['name'],
                   groundName: 'MCG',
                   submissions: '125'),
             ),
           );
         },
-        childCount: snapshot.data!.docs.length,
+        childCount: snapshot.data?.docs.length,
       ),
     );
   }
@@ -97,10 +101,11 @@ class HomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         color: Colors.white)),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(ProfileScreen());
+                    },
                     style: ButtonStyle(
-                      overlayColor:
-                          MaterialStateProperty.all(Colors.transparent),
+                      overlayColor: MaterialStateProperty.all(Colors.red),
                     ),
                     child: Text(
                       Strings.see_all,
@@ -152,7 +157,7 @@ class HomeScreen extends StatelessWidget {
   buildUpComingMatchesList(BuildContext context) {
     return SliverToBoxAdapter(
         child: Container(
-      height: 200,
+      height: 130,
       child: StreamBuilder<QuerySnapshot>(
         stream: homeController.getData(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -167,18 +172,16 @@ class HomeScreen extends StatelessWidget {
           return Container(
             child: ListView.builder(
               shrinkWrap: true,
-              primary: false,
-              padding: EdgeInsets.zero,
               itemCount: snapshot.data?.docs.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
-                DocumentSnapshot document = snapshot.data!.docs[index];
+                DocumentSnapshot? document = snapshot.data?.docs[index];
                 return SlideMatchCard(
                   match: MatchModel(
                       matchNumber: '1st',
                       team1: 'Australia',
                       team2: 'Sri Lanka',
-                      tournamentName: document['name'],
+                      tournamentName: document?['name'],
                       groundName: 'MCG',
                       submissions: '125'),
                 );

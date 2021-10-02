@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/controllers/home_controller.dart';
 import 'package:smash_it/ui/profile/profile_screen.dart';
 
@@ -8,6 +9,10 @@ import 'home/home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
+
+  DashboardScreen() {
+    homeController.page = 0.obs;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +33,11 @@ class DashboardScreen extends StatelessWidget {
           onTap: (value) {
             navigateToPage(value);
           },
-          selectedItemColor: Colors.redAccent,
-          unselectedItemColor: Colors.black,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: FantasyColors.SecondaryColor,
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          backgroundColor: Colors.white,
+          backgroundColor: FantasyColors.PrimaryColor,
           elevation: 0,
           currentIndex: homeController.page.value,
           items: [

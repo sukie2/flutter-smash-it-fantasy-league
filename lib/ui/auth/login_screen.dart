@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                                 .signInWithEmailAndPassword(context);
                             if (result) {
                               isLoading.value = false;
-                              Get.to(DashboardScreen());
+                              Get.offAll(DashboardScreen());
                             } else {
                               isLoading.value = false;
                               Get.snackbar(
