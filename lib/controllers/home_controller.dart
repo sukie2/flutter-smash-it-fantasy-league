@@ -27,8 +27,8 @@ class HomeController extends GetxController {
     final List<DocumentSnapshot> documents = result.docs;
   }
 
-  Stream<QuerySnapshot> getData() {
-    return _db.collection('series').snapshots();
+  Stream<QuerySnapshot> getMatches() {
+    return _db.collection('matches').snapshots();
   }
 
   Stream<QuerySnapshot> getPlayerData() {

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                 buildUpcomingMatchesTitleBar(),
                 buildUpComingMatchesList(context),
                 buildTopRankPlayer(),
-                buildTopRankList(context, snapshot),
+                // buildTopRankList(context, snapshot),
               ],
             );
           },
@@ -51,37 +52,35 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  buildTopRankList(BuildContext context, AsyncSnapshot snapshot) {
-    if (snapshot.hasError) {
-      return SliverToBoxAdapter(child: Text('Something went wrong'));
-    }
-
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return SliverToBoxAdapter(child: Text("Loading"));
-    }
-
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          DocumentSnapshot? document = snapshot.data?.docs[index];
-          return Container(
-            alignment: Alignment.center,
-            height: 200,
-            child: SlideMatchCard(
-              match: MatchModel(
-                  matchNumber: '1st',
-                  team1: 'Australia',
-                  team2: 'Sri Lanka',
-                  tournamentName: document?['name'],
-                  groundName: 'MCG',
-                  submissions: '125'),
-            ),
-          );
-        },
-        childCount: snapshot.data?.docs.length,
-      ),
-    );
-  }
+  // buildTopRankList(BuildContext context, AsyncSnapshot snapshot) {
+  //   if (snapshot.hasError) {
+  //     return SliverToBoxAdapter(child: Text('Something went wrong'));
+  //   }
+  //
+  //   if (snapshot.connectionState == ConnectionState.waiting) {
+  //     return SliverToBoxAdapter(child: Text("Loading"));
+  //   }
+  //
+  //   return SliverList(
+  //     delegate: SliverChildBuilderDelegate(
+  //       (BuildContext context, int index) {
+  //         DocumentSnapshot? document = snapshot.data?.docs[index];
+  //         return Container(
+  //           alignment: Alignment.center,
+  //           height: 200,
+  //           child: SlideMatchCard(
+  //             match: PlayerModel(
+  //                 name: '1st',
+  //                 points: 'Australia',
+  //                 role: 'Sri Lanka',
+  //                 country: document?['name']),
+  //           ),
+  //         );
+  //       },
+  //       childCount: snapshot.data?.docs.length,
+  //     ),
+  //   );
+  // }
 
   buildTopRankPlayer() {
     return SliverToBoxAdapter(
@@ -125,6 +124,7 @@ class HomeScreen extends StatelessWidget {
   buildUpcomingMatchesTitleBar() {
     return SliverToBoxAdapter(
       child: Container(
+        color: Colors.red,
         padding: EdgeInsets.only(bottom: Spacing.base),
         child: Row(
           textBaseline: TextBaseline.alphabetic,
@@ -136,18 +136,16 @@ class HomeScreen extends StatelessWidget {
                     fontSize: 22,
                     fontWeight: FontWeight.w500,
                     color: Colors.white)),
-            TextButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                ),
-                child: Text(
-                  Strings.see_all,
+            RichText(
+              text: TextSpan(
+                  text: Strings.see_all,
                   style: GoogleFonts.lato(
                       fontSize: 12,
                       decoration: TextDecoration.underline,
                       color: Colors.white),
-                ))
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => print('click')),
+            ),
           ],
         ),
       ),
@@ -157,9 +155,9 @@ class HomeScreen extends StatelessWidget {
   buildUpComingMatchesList(BuildContext context) {
     return SliverToBoxAdapter(
         child: Container(
-      height: 130,
+      height: 150,
       child: StreamBuilder<QuerySnapshot>(
-        stream: homeController.getData(),
+        stream: homeController.getMatches(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -178,12 +176,13 @@ class HomeScreen extends StatelessWidget {
                 DocumentSnapshot? document = snapshot.data?.docs[index];
                 return SlideMatchCard(
                   match: MatchModel(
-                      matchNumber: '1st',
-                      team1: 'Australia',
-                      team2: 'Sri Lanka',
-                      tournamentName: document?['name'],
-                      groundName: 'MCG',
-                      submissions: '125'),
+                      matchNumber: document?['match_number'],
+                      team1: document?['team1'],
+                      team2: document?['team2'],
+                      tournamentName: document?['series'],
+                      groundName: document?['ground'],
+                      submissions: document?['submissions'],
+                      date: document?['start']),
                 );
               },
             ),
