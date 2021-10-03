@@ -52,43 +52,29 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // buildTopRankList(BuildContext context, AsyncSnapshot snapshot) {
-  //   if (snapshot.hasError) {
-  //     return SliverToBoxAdapter(child: Text('Something went wrong'));
-  //   }
-  //
-  //   if (snapshot.connectionState == ConnectionState.waiting) {
-  //     return SliverToBoxAdapter(child: Text("Loading"));
-  //   }
-  //
-  //   return SliverList(
-  //     delegate: SliverChildBuilderDelegate(
-  //       (BuildContext context, int index) {
-  //         DocumentSnapshot? document = snapshot.data?.docs[index];
-  //         return Container(
-  //           alignment: Alignment.center,
-  //           height: 200,
-  //           child: SlideMatchCard(
-  //             match: PlayerModel(
-  //                 name: '1st',
-  //                 points: 'Australia',
-  //                 role: 'Sri Lanka',
-  //                 country: document?['name']),
-  //           ),
-  //         );
-  //       },
-  //       childCount: snapshot.data?.docs.length,
-  //     ),
-  //   );
-  // }
-
   buildTopRankPlayer() {
     return SliverToBoxAdapter(
       child: Container(
         padding: EdgeInsets.only(bottom: Spacing.base),
         child: Stack(
           children: [
-            Image(image: AssetImage('images/SLC.png')),
+            Image(image: AssetImage('images/rank_1.jpeg'), height: 200),
+            Card(
+              shadowColor: Colors.grey,
+              color: FantasyColors.SecondaryColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              elevation: 7.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // buildInfoRow(match),
+                  // buildCountryRow(match.team1),
+                  // buildCountryRow(match.team2),
+                  // buildDateRow(match)
+                ],
+              ),
+            ),
             Row(
               textBaseline: TextBaseline.alphabetic,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,7 +137,7 @@ class HomeScreen extends StatelessWidget {
   buildUpComingMatchesList(BuildContext context) {
     return SliverToBoxAdapter(
         child: Container(
-      height: 200,
+      height: 165,
       child: StreamBuilder<QuerySnapshot>(
         stream: homeController.getMatches(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -163,7 +149,8 @@ class HomeScreen extends StatelessWidget {
             return Text("Loading");
           }
 
-          return Container(
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 200, minHeight: 160),
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: snapshot.data?.docs.length,
