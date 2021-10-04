@@ -32,6 +32,9 @@ class HomeController extends GetxController {
   }
 
   Stream<QuerySnapshot> getPlayerData() {
-    return _db.collection('players').snapshots();
+    return _db
+        .collection('players')
+        .orderBy('points', descending: true)
+        .snapshots();
   }
 }

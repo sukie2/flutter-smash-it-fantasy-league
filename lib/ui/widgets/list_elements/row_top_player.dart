@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/constants/size_constants.dart';
-import 'package:smash_it/extentions/timestamp_ext.dart';
-import 'package:smash_it/models/match_model.dart';
+import 'package:smash_it/extentions/string_ext.dart';
 import 'package:smash_it/models/player_model.dart';
 
 class RowTopPlayer extends StatelessWidget {
   final PlayerModel player;
+  final int rankIndex;
 
-  RowTopPlayer({
-    required this.player,
-  });
+  RowTopPlayer({required this.player, required this.rankIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +19,13 @@ class RowTopPlayer extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         child: Card(
-          shadowColor: Colors.grey,
           color: FantasyColors.SecondaryColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 7.0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildPlayerRow(""),
+              getPlayerRow(rankIndex, player),
             ],
           ),
         ),
@@ -37,54 +33,102 @@ class RowTopPlayer extends StatelessWidget {
     );
   }
 
-  buildPlayerRow(String country) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(Spacing.base2x, Spacing.baseHalf,
-          Spacing.base2x, Spacing.baseQuarter),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.brown.shade800,
-            child: const Text('AH'),
+  getPlayerRow(int rank, PlayerModel player) {
+    if (rank == 1) {
+      return buildTopPlayerRow(player);
+    } else {
+      return buildPlayerRow(player);
+    }
+  }
+
+  buildTopPlayerRow(PlayerModel player) {
+    return Stack(
+      children: [
+        ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset('images/rank_1.jpeg')),
+        SizedBox(width: Spacing.base2x),
+        Padding(
+          padding: const EdgeInsets.all(Spacing.base2x),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Rank $rankIndex',
+                style:
+                    GoogleFonts.oswald(fontSize: 16, color: Colors.cyanAccent),
+              ),
+              Text(
+                player.name,
+                style: GoogleFonts.bebasNeue(fontSize: 22, color: Colors.white),
+              ),
+              Text(
+                player.country,
+                style: GoogleFonts.lato(fontSize: 16, color: Colors.white),
+              ),
+              Text(
+                player.points,
+                style: GoogleFonts.bebasNeue(
+                    fontSize: 36,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1,
+                    color: Colors.white),
+              ),
+            ],
           ),
-          SizedBox(width: Spacing.baseHalf),
-          Text(
-            country,
-            style: GoogleFonts.cabin(fontSize: 16, color: Colors.white),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  buildInfoRow(MatchModel match) {
+  buildPlayerRow(PlayerModel player) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-          Spacing.base2x, Spacing.base, Spacing.base2x, Spacing.base),
+      padding: const EdgeInsets.all(Spacing.base2x),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            match.tournamentName,
-            style: GoogleFonts.oswald(fontSize: 18, color: Colors.white),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.brown.shade800,
+                child: Text(
+                  player.name.getInitials(),
+                  style: GoogleFonts.oswald(fontSize: 24, color: Colors.white),
+                ),
+              ),
+              SizedBox(width: Spacing.base2x),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Rank $rankIndex',
+                    style: GoogleFonts.oswald(
+                        fontSize: 16, color: Colors.cyanAccent),
+                  ),
+                  Text(
+                    player.name,
+                    style: GoogleFonts.bebasNeue(
+                        fontSize: 22, color: Colors.white),
+                  ),
+                  Text(
+                    player.country,
+                    style: GoogleFonts.lato(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
+            ],
           ),
           Text(
-            "Match ${match.matchNumber}",
-            style: GoogleFonts.cabin(fontSize: 14, color: Colors.white),
-          )
+            player.points,
+            style: GoogleFonts.bebasNeue(
+                fontSize: 36,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1,
+                color: Colors.white),
+          ),
         ],
-      ),
-    );
-  }
-
-  buildDateRow(MatchModel match) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-          Spacing.base2x, Spacing.base, Spacing.base2x, Spacing.base),
-      child: Text(
-        "Starts at ${match.date.getFormattedDateAndTime()} ",
-        style: GoogleFonts.cabin(fontSize: 12, color: Colors.white),
       ),
     );
   }

@@ -69,20 +69,17 @@ class HomeScreen extends StatelessWidget {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           DocumentSnapshot? document = snapshot.data?.docs[index];
-          if (index > 0) {
-            return Container(
-              alignment: Alignment.center,
-              child: RowTopPlayer(
-                player: PlayerModel(
-                    name: document?['name'],
-                    points: document?['points'],
-                    role: document?['role'],
-                    country: document?['country']),
-              ),
-            );
-          } else {
-            return Text("dsf");
-          }
+          return Container(
+            alignment: Alignment.center,
+            child: RowTopPlayer(
+              player: PlayerModel(
+                  name: document?['name'],
+                  points: document?['points'],
+                  role: document?['role'],
+                  country: document?['country']),
+              rankIndex: index + 1,
+            ),
+          );
         },
         childCount: snapshot.data?.docs.length,
       ),
@@ -110,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                   style: GoogleFonts.lato(
                       fontSize: 12,
                       decoration: TextDecoration.underline,
-                      color: Colors.white),
+                      color: Colors.cyanAccent),
                   recognizer: TapGestureRecognizer()..onTap = onTap),
             ),
           ],

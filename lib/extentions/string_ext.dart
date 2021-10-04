@@ -1,7 +1,9 @@
 extension StringExt on String {
-  // String getFormattedDate() {
-  //   var date = DateFormat('dd/mm/yyyy').parse(this);
-  //   final DateFormat formatter = DateFormat('dd-MM-yyyy');
-  //   return formatter.format(date);
-  // }
+  String getInitials() {
+    var array = this.split(' ');
+    if (array.isNotEmpty && array.length > 1) {
+      return '${array[0][0]}${array[1][0]}';
+    }
+    return '';
+  }
 }

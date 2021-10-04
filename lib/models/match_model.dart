@@ -26,6 +26,8 @@ class MatchModel {
         return 'images/flags/LK.png';
       case 'England':
         return 'images/flags/England.png';
+      case 'India':
+        return 'images/flags/IN.png';
       default:
         return 'images/flags/AU.png';
     }
