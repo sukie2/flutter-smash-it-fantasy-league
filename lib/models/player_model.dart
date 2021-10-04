@@ -1,6 +1,6 @@
 class PlayerModel {
   final String name;
-  final double points;
+  final String points;
   final String role;
   final String country;
 

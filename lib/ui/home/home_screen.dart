@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/home_controller.dart';
 import 'package:smash_it/models/match_model.dart';
-import 'package:smash_it/ui/profile/profile_screen.dart';
+import 'package:smash_it/models/player_model.dart';
+import 'package:smash_it/ui/widgets/list_elements/row_top_player.dart';
 import 'package:smash_it/ui/widgets/slide_match_card.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
-  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FantasyColors.PrimaryColor,
@@ -40,10 +40,14 @@ class HomeScreen extends StatelessWidget {
                     title: buildTitleBar(),
                   ),
                 ),
-                buildUpcomingMatchesTitleBar(),
+                buildHeadingRow(Strings.upcoming_matches, () {
+                  print("tap 1");
+                }, 0, Spacing.base),
                 buildUpComingMatchesList(context),
-                buildTopRankPlayer(),
-                // buildTopRankList(context, snapshot),
+                buildHeadingRow(Strings.top_players, () {
+                  print("tap 2");
+                }, Spacing.base2x, Spacing.base),
+                buildTopRankList(context, snapshot),
               ],
             );
           },
@@ -52,68 +56,50 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  buildTopRankPlayer() {
-    return SliverToBoxAdapter(
-      child: Container(
-        padding: EdgeInsets.only(bottom: Spacing.base),
-        child: Stack(
-          children: [
-            Image(image: AssetImage('images/rank_1.jpeg'), height: 200),
-            Card(
-              shadowColor: Colors.grey,
-              color: FantasyColors.SecondaryColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              elevation: 7.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // buildInfoRow(match),
-                  // buildCountryRow(match.team1),
-                  // buildCountryRow(match.team2),
-                  // buildDateRow(match)
-                ],
+  buildTopRankList(BuildContext context, AsyncSnapshot snapshot) {
+    if (snapshot.hasError) {
+      return SliverToBoxAdapter(child: Text('Something went wrong'));
+    }
+
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return SliverToBoxAdapter(child: Text("Loading"));
+    }
+
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          DocumentSnapshot? document = snapshot.data?.docs[index];
+          if (index > 0) {
+            return Container(
+              alignment: Alignment.center,
+              child: RowTopPlayer(
+                player: PlayerModel(
+                    name: document?['name'],
+                    points: document?['points'],
+                    role: document?['role'],
+                    country: document?['country']),
               ),
-            ),
-            Row(
-              textBaseline: TextBaseline.alphabetic,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              children: [
-                Text(Strings.upcoming_matches,
-                    style: GoogleFonts.oswald(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white)),
-                TextButton(
-                    onPressed: () {
-                      Get.to(ProfileScreen());
-                    },
-                    child: Text(
-                      Strings.see_all,
-                      style: GoogleFonts.lato(
-                          fontSize: 12,
-                          decoration: TextDecoration.underline,
-                          color: Colors.white),
-                    ))
-              ],
-            ),
-          ],
-        ),
+            );
+          } else {
+            return Text("dsf");
+          }
+        },
+        childCount: snapshot.data?.docs.length,
       ),
     );
   }
 
-  buildUpcomingMatchesTitleBar() {
+  buildHeadingRow(
+      String title, Function() onTap, double topPadding, double bottomPadding) {
     return SliverToBoxAdapter(
       child: Container(
-        padding: EdgeInsets.only(bottom: Spacing.base),
+        padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
         child: Row(
           textBaseline: TextBaseline.alphabetic,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
-            Text(Strings.upcoming_matches,
+            Text(title,
                 style: GoogleFonts.oswald(
                     fontSize: 22,
                     fontWeight: FontWeight.w500,
@@ -125,8 +111,7 @@ class HomeScreen extends StatelessWidget {
                       fontSize: 12,
                       decoration: TextDecoration.underline,
                       color: Colors.white),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => print('click')),
+                  recognizer: TapGestureRecognizer()..onTap = onTap),
             ),
           ],
         ),

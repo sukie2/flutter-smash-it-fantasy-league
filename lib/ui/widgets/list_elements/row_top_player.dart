@@ -5,12 +5,13 @@ import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/extentions/timestamp_ext.dart';
 import 'package:smash_it/models/match_model.dart';
+import 'package:smash_it/models/player_model.dart';
 
-class SlideMatchCard extends StatelessWidget {
-  final MatchModel match;
+class RowTopPlayer extends StatelessWidget {
+  final PlayerModel player;
 
-  SlideMatchCard({
-    required this.match,
+  RowTopPlayer({
+    required this.player,
   });
 
   @override
@@ -18,9 +19,9 @@ class SlideMatchCard extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        width: MediaQuery.of(context).size.width / 1.5,
+        width: MediaQuery.of(context).size.width,
         child: Card(
-          shadowColor: Colors.deepPurple,
+          shadowColor: Colors.grey,
           color: FantasyColors.SecondaryColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -28,10 +29,7 @@ class SlideMatchCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildInfoRow(match),
-              buildCountryRow(match.team1),
-              buildCountryRow(match.team2),
-              buildDateRow(match)
+              buildPlayerRow(""),
             ],
           ),
         ),
@@ -39,18 +37,16 @@ class SlideMatchCard extends StatelessWidget {
     );
   }
 
-  buildCountryRow(String country) {
+  buildPlayerRow(String country) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(Spacing.base2x, Spacing.baseHalf,
           Spacing.base2x, Spacing.baseQuarter),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Image(
-            height: 30,
-            width: 50,
-            image: AssetImage(MatchModel.getCountryFlag(teamName: country)),
-            fit: BoxFit.cover,
+          CircleAvatar(
+            backgroundColor: Colors.brown.shade800,
+            child: const Text('AH'),
           ),
           SizedBox(width: Spacing.baseHalf),
           Text(
