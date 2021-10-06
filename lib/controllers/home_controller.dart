@@ -5,11 +5,15 @@ import 'package:get/get.dart';
 class HomeController extends GetxController {
   static HomeController to = Get.find();
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  var pageController = PageController().obs;
+  var pageController = PageController(initialPage: 0, keepPage: true).obs;
   var page = 0.obs;
 
   onPageChanged(input) {
     page.value = input;
+  }
+
+  jumpTo(int page) {
+    if (pageController.value.hasClients) pageController.value.jumpToPage(page);
   }
 
   animateTo(int page) {

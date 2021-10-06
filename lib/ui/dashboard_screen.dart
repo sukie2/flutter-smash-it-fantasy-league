@@ -53,7 +53,7 @@ class DashboardScreen extends StatelessWidget {
   }
 
   navigateToPage(int input) {
-    homeController.animateTo(input);
+    homeController.jumpTo(input);
     homeController.onPageChanged(input);
     // if(input == 0){
     //   drawer.onPageChanged(0);
