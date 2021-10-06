@@ -1,45 +1,130 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/constants/size_constants.dart';
-import 'package:smash_it/ui/home/up_coming_matches.dart';
+import 'package:smash_it/constants/string_constants.dart';
+import 'package:smash_it/controllers/history_controller.dart';
+import 'package:smash_it/models/match_model.dart';
+import 'package:smash_it/ui/widgets/slide_match_card.dart';
 
 class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({Key? key}) : super(key: key);
-
-  @override
+  final HistoryController historyController = HistoryController.to;
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          child: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            toolbarHeight: 30,
-            // Display a placeholder widget to visualize the shrinking size.
-            flexibleSpace: FlexibleSpaceBar(
-                title: Padding(
-              padding:
-                  EdgeInsets.only(top: Spacing.base3x, left: Spacing.base2x),
-              child: Column(
-                children: [
-                  Text('Your past matches'),
-                ],
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-              ),
-            )),
-            expandedHeight: 60,
-            collapsedHeight: 40,
-            pinned: true,
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return UpComingMatchRow();
-              },
-              childCount: 100,
-            ),
-          ),
-        ],
-      )),
+      backgroundColor: FantasyColors.PrimaryColor,
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(
+            Spacing.base2x, Spacing.base2x, Spacing.base2x, 0),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: historyController.getMatches(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            return CustomScrollView(
+              shrinkWrap: true,
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: FantasyColors.PrimaryColor,
+                  automaticallyImplyLeading: false,
+                  elevation: 0,
+                  pinned: true,
+                  expandedHeight: 100,
+                  flexibleSpace: FlexibleSpaceBar(
+                    titlePadding:
+                        EdgeInsets.only(top: 0, bottom: Spacing.base2x),
+                    centerTitle: false,
+                    title: buildTitleBar(),
+                  ),
+                ),
+                buildHeadingRow(Strings.upcoming_matches, () {
+                  print("tap 1");
+                }, 0, Spacing.base),
+                buildUpComingMatchesList(context),
+              ],
+            );
+          },
+        ),
+      ),
     );
+  }
+
+  buildTitleBar() {
+    return Container(
+      child: Text(Strings.app_name,
+          style: GoogleFonts.bebasNeue(
+              fontSize: 36, fontWeight: FontWeight.w600, letterSpacing: 1)),
+    );
+  }
+
+  buildHeadingRow(
+      String title, Function() onTap, double topPadding, double bottomPadding) {
+    return SliverToBoxAdapter(
+      child: Container(
+        padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
+        child: Row(
+          textBaseline: TextBaseline.alphabetic,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          children: [
+            Text(title,
+                style: GoogleFonts.oswald(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white)),
+            RichText(
+              text: TextSpan(
+                  text: Strings.see_all,
+                  style: GoogleFonts.lato(
+                      fontSize: 12,
+                      decoration: TextDecoration.underline,
+                      color: Colors.cyanAccent),
+                  recognizer: TapGestureRecognizer()..onTap = onTap),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildUpComingMatchesList(BuildContext context) {
+    return SliverToBoxAdapter(
+        child: Container(
+      height: 165,
+      child: StreamBuilder<QuerySnapshot>(
+        stream: historyController.getMatches(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          return ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 200, minHeight: 160),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data?.docs.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                DocumentSnapshot? document = snapshot.data?.docs[index];
+                return SlideMatchCard(
+                  match: MatchModel(
+                      matchNumber: document?['match_number'],
+                      team1: document?['team1'],
+                      team2: document?['team2'],
+                      tournamentName: document?['series'],
+                      groundName: document?['ground'],
+                      submissions: document?['submissions'],
+                      date: document?['start']),
+                );
+              },
+            ),
+          );
+        },
+      ),
+    ));
   }
 }
