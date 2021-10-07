@@ -9,9 +9,10 @@ import 'package:smash_it/models/player_model.dart';
 class RowTeamPicker extends StatelessWidget {
   final PlayerModel player;
   final int rankIndex;
-  var isSelected = false.obs;
+  final onTap;
 
-  RowTeamPicker({required this.player, required this.rankIndex});
+  RowTeamPicker(
+      {required this.player, required this.rankIndex, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +81,11 @@ class RowTeamPicker extends StatelessWidget {
           Obx(
             () => GestureDetector(
               onTap: () {
-                isSelected.value = !isSelected.value;
+                player.isSelected.value = !player.isSelected.value;
+                onTap(player);
               },
               child: Icon(
-                isSelected.value
+                player.isSelected.value
                     ? Icons.check_circle_rounded
                     : Icons.check_circle_outline,
                 size: 30,

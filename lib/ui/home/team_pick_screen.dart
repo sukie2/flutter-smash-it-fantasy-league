@@ -10,6 +10,7 @@ import 'package:smash_it/ui/widgets/list_elements/row_team_pick.dart';
 
 class TeamPickScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
+  var selectedPlayers = new Map<String, PlayerModel>();
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,11 +77,25 @@ class TeamPickScreen extends StatelessWidget {
                   role: document?['role'],
                   country: document?['country']),
               rankIndex: index + 1,
+              onTap: (PlayerModel player) {
+                this.onTap(player);
+              },
             ),
           );
         },
         childCount: snapshot.data?.docs.length,
       ),
     );
+  }
+
+  onTap(PlayerModel player) {
+    if (selectedPlayers.containsKey(player.name)) {
+      selectedPlayers.remove(player.name);
+    } else {
+      selectedPlayers.putIfAbsent(player.name, () => player);
+    }
+    selectedPlayers.forEach((key, value) {
+      print(key);
+    });
   }
 }
