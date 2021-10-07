@@ -7,4 +7,5 @@ class Strings {
   static const top_players = 'Top fantasy players';
   static const see_all = 'See all';
   static const past_matches = 'Past matches';
+  static const pick_your_team = 'Pick your team';
 }

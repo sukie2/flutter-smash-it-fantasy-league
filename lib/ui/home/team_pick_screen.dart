@@ -6,7 +6,7 @@ import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/home_controller.dart';
 import 'package:smash_it/models/player_model.dart';
-import 'package:smash_it/ui/widgets/list_elements/row_top_player.dart';
+import 'package:smash_it/ui/widgets/list_elements/row_team_pick.dart';
 
 class TeamPickScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
@@ -48,7 +48,7 @@ class TeamPickScreen extends StatelessWidget {
 
   buildTitleBar() {
     return Container(
-      child: Text(Strings.past_matches,
+      child: Text(Strings.pick_your_team,
           style: GoogleFonts.bebasNeue(
               fontSize: 30, fontWeight: FontWeight.w600, letterSpacing: 1)),
     );
@@ -69,7 +69,7 @@ class TeamPickScreen extends StatelessWidget {
           DocumentSnapshot? document = snapshot.data?.docs[index];
           return Container(
             alignment: Alignment.center,
-            child: RowTopPlayer(
+            child: RowTeamPicker(
               player: PlayerModel(
                   name: document?['name'],
                   points: document?['points'],
