@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/constants/size_constants.dart';
@@ -8,6 +9,7 @@ import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/home_controller.dart';
 import 'package:smash_it/models/match_model.dart';
 import 'package:smash_it/models/player_model.dart';
+import 'package:smash_it/ui/home/team_pick_screen.dart';
 import 'package:smash_it/ui/widgets/list_elements/row_top_player.dart';
 import 'package:smash_it/ui/widgets/slide_match_card.dart';
 
@@ -139,15 +141,21 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
                 DocumentSnapshot? document = snapshot.data?.docs[index];
-                return SlideMatchCard(
-                  match: MatchModel(
-                      matchNumber: document?['match_number'],
-                      team1: document?['team1'],
-                      team2: document?['team2'],
-                      tournamentName: document?['series'],
-                      groundName: document?['ground'],
-                      submissions: document?['submissions'],
-                      date: document?['start']),
+                return GestureDetector(
+                  onTap: () {
+                    Get.to(TeamPickScreen());
+                  },
+                  child: SlideMatchCard(
+                    match: MatchModel(
+                        matchNumber: document?['match_number'],
+                        team1: document?['team1'],
+                        team2: document?['team2'],
+                        tournamentName: document?['series'],
+                        groundName: document?['ground'],
+                        submissions: document?['submissions'],
+                        date: document?['start']),
+                    isHistoryRow: false,
+                  ),
                 );
               },
             ),

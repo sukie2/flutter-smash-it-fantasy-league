@@ -29,7 +29,7 @@ class HistoryScreen extends StatelessWidget {
                   automaticallyImplyLeading: false,
                   elevation: 0,
                   pinned: true,
-                  expandedHeight: 100,
+                  expandedHeight: 80,
                   flexibleSpace: FlexibleSpaceBar(
                     titlePadding:
                         EdgeInsets.only(top: 0, bottom: Spacing.base2x),
@@ -40,7 +40,7 @@ class HistoryScreen extends StatelessWidget {
                 buildHeadingRow(Strings.upcoming_matches, () {
                   print("tap 1");
                 }, 0, Spacing.base),
-                buildUpComingMatchesList(context),
+                buildMatchHistoryList(context, snapshot),
               ],
             );
           },
@@ -51,9 +51,9 @@ class HistoryScreen extends StatelessWidget {
 
   buildTitleBar() {
     return Container(
-      child: Text(Strings.app_name,
+      child: Text(Strings.past_matches,
           style: GoogleFonts.bebasNeue(
-              fontSize: 36, fontWeight: FontWeight.w600, letterSpacing: 1)),
+              fontSize: 30, fontWeight: FontWeight.w600, letterSpacing: 1)),
     );
   }
 
@@ -87,44 +87,36 @@ class HistoryScreen extends StatelessWidget {
     );
   }
 
-  buildUpComingMatchesList(BuildContext context) {
-    return SliverToBoxAdapter(
-        child: Container(
-      height: 165,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: historyController.getMatches(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
+  buildMatchHistoryList(BuildContext context, AsyncSnapshot snapshot) {
+    if (snapshot.hasError) {
+      return SliverToBoxAdapter(child: Text('Something went wrong'));
+    }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
-          }
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return SliverToBoxAdapter(child: Text("Loading"));
+    }
 
-          return ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 200, minHeight: 160),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data?.docs.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                DocumentSnapshot? document = snapshot.data?.docs[index];
-                return SlideMatchCard(
-                  match: MatchModel(
-                      matchNumber: document?['match_number'],
-                      team1: document?['team1'],
-                      team2: document?['team2'],
-                      tournamentName: document?['series'],
-                      groundName: document?['ground'],
-                      submissions: document?['submissions'],
-                      date: document?['start']),
-                );
-              },
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          DocumentSnapshot? document = snapshot.data?.docs[index];
+          return Container(
+            alignment: Alignment.center,
+            child: SlideMatchCard(
+              match: MatchModel(
+                  matchNumber: document?['match_number'],
+                  team1: document?['team1'],
+                  team2: document?['team2'],
+                  tournamentName: document?['series'],
+                  groundName: document?['ground'],
+                  submissions: document?['submissions'],
+                  date: document?['start']),
+              isHistoryRow: true,
             ),
           );
         },
+        childCount: snapshot.data?.docs.length,
       ),
-    ));
+    );
   }
 }

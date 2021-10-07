@@ -8,23 +8,24 @@ import 'package:smash_it/models/match_model.dart';
 
 class SlideMatchCard extends StatelessWidget {
   final MatchModel match;
+  final bool isHistoryRow;
 
-  SlideMatchCard({
-    required this.match,
-  });
+  SlideMatchCard({required this.match, required this.isHistoryRow});
 
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        width: MediaQuery.of(context).size.width / 1.5,
+        padding: EdgeInsets.only(top: isHistoryRow ? 10 : 0),
+        width: isHistoryRow
+            ? MediaQuery.of(context).size.width
+            : MediaQuery.of(context).size.width / 1.5,
         child: Card(
-          shadowColor: Colors.deepPurple,
           color: FantasyColors.SecondaryColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          elevation: 7.0,
+          elevation: 2.0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -87,7 +88,9 @@ class SlideMatchCard extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(
           Spacing.base2x, Spacing.base, Spacing.base2x, Spacing.base),
       child: Text(
-        "Starts at ${match.date.getFormattedDateAndTime()} ",
+        isHistoryRow
+            ? "Started at ${match.date.getFormattedDateAndTime()} "
+            : "Starts at ${match.date.getFormattedDateAndTime()} ",
         style: GoogleFonts.cabin(fontSize: 12, color: Colors.white),
       ),
     );

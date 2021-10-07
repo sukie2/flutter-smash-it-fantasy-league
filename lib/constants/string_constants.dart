@@ -6,4 +6,5 @@ class Strings {
   static const upcoming_matches = 'Upcoming matches';
   static const top_players = 'Top fantasy players';
   static const see_all = 'See all';
+  static const past_matches = 'Past matches';
 }
