@@ -7,7 +7,7 @@ import 'package:smash_it/constants/size_constants.dart';
 import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/history_controller.dart';
 import 'package:smash_it/models/match_model.dart';
-import 'package:smash_it/ui/widgets/slide_match_card.dart';
+import 'package:smash_it/ui/widgets/list_elements/slide_match_card.dart';
 
 class HistoryScreen extends StatelessWidget {
   final HistoryController historyController = HistoryController.to;

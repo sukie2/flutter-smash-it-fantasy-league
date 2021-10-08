@@ -11,7 +11,7 @@ import 'package:smash_it/models/match_model.dart';
 import 'package:smash_it/models/player_model.dart';
 import 'package:smash_it/ui/home/team_pick_screen.dart';
 import 'package:smash_it/ui/widgets/list_elements/row_top_player.dart';
-import 'package:smash_it/ui/widgets/slide_match_card.dart';
+import 'package:smash_it/ui/widgets/list_elements/slide_match_card.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController homeController = HomeController.to;
