@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:smash_it/extentions/string_ext.dart';
 import 'package:smash_it/models/player_model.dart';
 
 class GridSelectedPlayer extends StatelessWidget {
@@ -8,6 +10,13 @@ class GridSelectedPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return CircleAvatar(
+      minRadius: 100,
+      backgroundColor: Colors.cyan,
+      child: Text(
+        player.name.getInitials(),
+        style: GoogleFonts.oswald(fontSize: 24, color: Colors.white),
+      ),
+    );
   }
 }
