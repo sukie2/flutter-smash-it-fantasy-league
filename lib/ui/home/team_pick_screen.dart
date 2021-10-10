@@ -17,23 +17,17 @@ class TeamPickScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FantasyColors.PrimaryColor,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(
-            Spacing.base2x, 0, Spacing.base2x, Spacing.base3x),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: homeController.getPlayerData(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            return CustomScrollView(
-              shrinkWrap: true,
-              slivers: [
-                buildAppBar(),
-                buildSelectedList(context),
-                buildPlayerList(context, snapshot),
-              ],
-            );
-          },
-        ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: homeController.getPlayerData(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          return CustomScrollView(
+            slivers: [
+              buildAppBar(),
+              buildSelectedList(context),
+              buildPlayerList(context, snapshot),
+            ],
+          );
+        },
       ),
     );
   }
@@ -88,14 +82,10 @@ class TeamPickScreen extends StatelessWidget {
 
   buildAppBar() {
     return SliverAppBar(
+      centerTitle: false,
       backgroundColor: FantasyColors.PrimaryColor,
-      automaticallyImplyLeading: false,
-      elevation: 0,
       pinned: true,
-      expandedHeight: 100,
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.only(top: 0, bottom: Spacing.base2x),
-        centerTitle: false,
         title: Container(
           child: Text(Strings.pick_your_team,
               style: GoogleFonts.bebasNeue(

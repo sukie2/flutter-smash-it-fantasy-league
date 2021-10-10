@@ -16,5 +16,5 @@ class TextConstants {
       fontSize: 14.0, color: Colors.black38, fontWeight: FontWeight.bold);
 
   static const TextStyle kSplashText = TextStyle(
-      fontSize: 18.0, color: Colors.green, fontWeight: FontWeight.bold);
+      fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold);
 }
