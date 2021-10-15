@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class TextConstants {
   static const TextStyle kPlayerName =
-      TextStyle(fontSize: 18.0, color: Colors.black);
+      TextStyle(fontSize: 18.0, color: Colors.white);
 
   static const TextStyle kPlayerNameInitials =
       TextStyle(fontSize: 24.0, color: Colors.white);

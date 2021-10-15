@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/helpers/validator.dart';
@@ -18,6 +19,7 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FantasyColors.PrimaryColor,
       body: Obx(
         () => Form(
           key: _formKey,

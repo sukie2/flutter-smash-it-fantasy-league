@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/helpers/validator.dart';
 import 'package:smash_it/ui/auth/login_screen.dart';
@@ -12,6 +13,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FantasyColors.PrimaryColor,
       appBar: AppBar(
         title: Text('Reset Password'),
       ),
@@ -41,10 +43,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                     title: const Text('Password reset email sent'),
                     actions: <Widget>[
                       TextButton(
-                        onPressed: () => {
-                          Get.back(),
-                          Get.to(() => LoginScreen())
-                        },
+                        onPressed: () =>
+                            {Get.back(), Get.to(() => LoginScreen())},
                         child: const Text('OK'),
                       ),
                     ],

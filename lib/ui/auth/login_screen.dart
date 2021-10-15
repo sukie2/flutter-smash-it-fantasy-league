@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:smash_it/constants/color_constants.dart';
 import 'package:smash_it/constants/string_constants.dart';
 import 'package:smash_it/controllers/auth_controller.dart';
 import 'package:smash_it/helpers/validator.dart';
@@ -20,6 +21,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FantasyColors.PrimaryColor,
       body: Obx(
         () => ModalProgressHUD(
           inAsyncCall: isLoading.value,
@@ -57,7 +59,10 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () {
                           Get.to(() => ForgotPasswordScreen());
                         },
-                        child: Text('Forgot Password'),
+                        child: Text(
+                          'Forgot Password',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                       SizedBox(height: 10),
                       TextButton(
@@ -86,7 +91,8 @@ class LoginScreen extends StatelessWidget {
                         },
                         child: const Text(
                           'Login',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
                     ],
@@ -94,12 +100,18 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('No account with us?'),
+                      Text(
+                        'No account with us?',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       TextButton(
                         onPressed: () async {
                           Get.to(SignUpScreen());
                         },
-                        child: const Text('Sign Up'),
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(color: Colors.cyan),
+                        ),
                       ),
                     ],
                   ),

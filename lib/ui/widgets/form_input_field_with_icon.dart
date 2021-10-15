@@ -27,9 +27,14 @@ class FormInputFieldWithIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: TextStyle(color: Colors.white, decorationColor: Color(0XFFFFCC00)),
       decoration: InputDecoration(
+        prefixStyle: TextStyle(color: Colors.white),
+        hintStyle: TextStyle(color: Colors.white),
+        suffixStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.white),
         filled: true,
-        prefixIcon: Icon(iconPrefix),
+        prefixIcon: Icon(iconPrefix, color: Colors.cyan),
         labelText: labelText,
       ),
       controller: controller,
